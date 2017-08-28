@@ -1,188 +1,332 @@
-view: _contact {
-  sql_table_name: looker_salesforce.sf_contact ;;
-  # dimensions #
+view: contact {
+  sql_table_name: salesforce."sf_Contact" ;;
 
   dimension: id {
     primary_key: yes
     type: string
-    sql: ${TABLE}.id ;;
+    sql: ${TABLE}."Id" ;;
+  }
+
+  dimension_group: _sdc_batched {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."_sdc_batched_at" ;;
+  }
+
+  dimension_group: _sdc_received {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."_sdc_received_at" ;;
+  }
+
+  dimension: _sdc_sequence {
+    type: number
+    sql: ${TABLE}."_sdc_sequence" ;;
+  }
+
+  dimension: _sdc_table_version {
+    type: number
+    sql: ${TABLE}."_sdc_table_version" ;;
   }
 
   dimension: account_id {
     type: string
-    sql: ${TABLE}.accountid ;;
+    sql: ${TABLE}."AccountId" ;;
   }
 
-  dimension: assistant_name {
+  dimension: address__c {
     type: string
-    sql: ${TABLE}.assistantname ;;
+    sql: ${TABLE}."Address__c" ;;
   }
 
-  #   - dimension: assistant_phone
-  #     type: string
-  #     sql: ${TABLE}.assistantphone
+  dimension: attributes__type {
+    type: string
+    sql: ${TABLE}."attributes__type" ;;
+  }
 
-  dimension_group: birth_date {
-    type: time
-    timeframes: [date, week, month]
-    convert_tz: no
-    sql: ${TABLE}.birthdate ;;
+  dimension: contact_number__c {
+    type: string
+    sql: ${TABLE}."Contact_Number__c" ;;
   }
 
   dimension: created_by_id {
     type: string
-    hidden: yes
-    sql: ${TABLE}.createdbyid ;;
+    sql: ${TABLE}."CreatedById" ;;
   }
 
   dimension_group: created {
     type: time
-    timeframes: [date, week, month]
-    sql: ${TABLE}.createddate ;;
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."CreatedDate" ;;
   }
 
-  dimension: department {
+  dimension: currency_iso_code {
     type: string
-    sql: ${TABLE}.department ;;
+    sql: ${TABLE}."CurrencyIsoCode" ;;
+  }
+
+  dimension: description {
+    type: string
+    sql: ${TABLE}."Description" ;;
+  }
+
+  dimension: do_not_call {
+    type: yesno
+    sql: ${TABLE}."DoNotCall" ;;
+  }
+
+  dimension: do_not_contact_from_marketing__c {
+    type: yesno
+    sql: ${TABLE}."Do_Not_contact_from_Marketing__c" ;;
   }
 
   dimension: email {
     type: string
-    sql: ${TABLE}.email ;;
+    sql: ${TABLE}."Email" ;;
   }
 
-  dimension: fax {
+  dimension: et4ae5__has_opted_out_of_mobile__c {
+    type: yesno
+    sql: ${TABLE}."et4ae5__HasOptedOutOfMobile__c" ;;
+  }
+
+  dimension: et4ae5__mobile_country_code__c {
     type: string
-    sql: ${TABLE}.fax ;;
+    sql: ${TABLE}."et4ae5__Mobile_Country_Code__c" ;;
   }
 
   dimension: first_name {
     type: string
-    sql: ${TABLE}.firstname ;;
+    sql: ${TABLE}."FirstName" ;;
+  }
+
+  dimension: has_opted_out_of_email {
+    type: yesno
+    sql: ${TABLE}."HasOptedOutOfEmail" ;;
+  }
+
+  dimension: has_opted_out_of_fax {
+    type: yesno
+    sql: ${TABLE}."HasOptedOutOfFax" ;;
   }
 
   dimension: is_deleted {
     type: yesno
-    sql: ${TABLE}.isdeleted ;;
+    sql: ${TABLE}."IsDeleted" ;;
   }
 
-  dimension: email_bounced {
+  dimension: is_email_bounced {
     type: yesno
-    sql: ${TABLE}.isemailbounced ;;
+    sql: ${TABLE}."IsEmailBounced" ;;
+  }
+
+  dimension_group: last_activity {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."LastActivityDate" ;;
   }
 
   dimension: last_modified_by_id {
     type: string
-    hidden: yes
-    sql: ${TABLE}.lastmodifiedbyid ;;
+    sql: ${TABLE}."LastModifiedById" ;;
   }
 
   dimension_group: last_modified {
     type: time
-    timeframes: [date, week, month]
-    sql: ${TABLE}.lastmodifieddate ;;
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."LastModifiedDate" ;;
   }
 
   dimension: last_name {
     type: string
-    sql: ${TABLE}.lastname ;;
+    sql: ${TABLE}."LastName" ;;
+  }
+
+  dimension_group: last_referenced {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."LastReferencedDate" ;;
+  }
+
+  dimension_group: last_viewed {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."LastViewedDate" ;;
   }
 
   dimension: lead_source {
     type: string
-    sql: ${TABLE}.leadsource ;;
+    sql: ${TABLE}."LeadSource" ;;
   }
 
-  dimension: mailing_city {
+  dimension: legacy_contact_id__c {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}."Legacy_Contact_ID__c" ;;
+  }
+
+  dimension: mailing_address__country {
     type: string
-    sql: ${TABLE}.mailingcity ;;
+    sql: ${TABLE}."MailingAddress__country" ;;
   }
 
   dimension: mailing_country {
     type: string
-    sql: ${TABLE}.mailingcountry ;;
+    sql: ${TABLE}."MailingCountry" ;;
   }
 
-  dimension: mailing_postal_code {
+  dimension: main_city__c {
     type: string
-    sql: ${TABLE}.mailingpostalcode ;;
+    sql: ${TABLE}."Main_City__c" ;;
   }
 
-  dimension: mailing_state {
+  dimension: main_country__c {
     type: string
-    sql: ${TABLE}.mailingstate ;;
+    sql: ${TABLE}."Main_Country__c" ;;
   }
 
-  dimension: mailing_street {
+  dimension: main_postcode__c {
     type: string
-    sql: ${TABLE}.mailingstreet ;;
+    sql: ${TABLE}."Main_Postcode__c" ;;
+  }
+
+  dimension: main_state_province__c {
+    type: string
+    sql: ${TABLE}."Main_State_Province__c" ;;
+  }
+
+  dimension: main_street__c {
+    type: string
+    sql: ${TABLE}."Main_Street__c" ;;
+  }
+
+  dimension: master_record_id {
+    type: string
+    sql: ${TABLE}."MasterRecordId" ;;
+  }
+
+  dimension: member_admin__c {
+    type: yesno
+    sql: ${TABLE}."Member_admin__c" ;;
   }
 
   dimension: mobile_phone {
     type: string
-    sql: ${TABLE}.mobilephone ;;
+    sql: ${TABLE}."MobilePhone" ;;
   }
 
   dimension: name {
     type: string
-    sql: ${TABLE}.name ;;
+    sql: ${TABLE}."Name" ;;
   }
-
-  #   - dimension: other_city
-  #     type: string
-  #     sql: ${TABLE}.othercity
-  #
-  #   - dimension: other_country
-  #     type: string
-  #     sql: ${TABLE}.othercountry
-  #
-  #   - dimension: other_phone
-  #     type: string
-  #     sql: ${TABLE}.otherphone
-  #
-  #   - dimension: other_postal_code
-  #     type: string
-  #     sql: ${TABLE}.otherpostalcode
-  #
-  #   - dimension: other_state
-  #     type: string
-  #     sql: ${TABLE}.otherstate
-  #
-  #   - dimension: other_street
-  #     type: string
-  #     sql: ${TABLE}.otherstreet
 
   dimension: owner_id {
     type: string
-    hidden: yes
-    sql: ${TABLE}.ownerid ;;
+    sql: ${TABLE}."OwnerId" ;;
   }
 
   dimension: phone {
     type: string
-    sql: ${TABLE}.phone ;;
+    sql: ${TABLE}."Phone" ;;
+  }
+
+  dimension: photo_url {
+    type: string
+    sql: ${TABLE}."PhotoUrl" ;;
   }
 
   dimension: salutation {
     type: string
-    sql: ${TABLE}.salutation ;;
+    sql: ${TABLE}."Salutation" ;;
   }
 
   dimension_group: system_modstamp {
     type: time
-    timeframes: [date, week, month]
-    sql: ${TABLE}.systemmodstamp ;;
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."SystemModstamp" ;;
+  }
+
+  dimension: tier__c {
+    type: string
+    sql: ${TABLE}."Tier__c" ;;
   }
 
   dimension: title {
     type: string
-    sql: ${TABLE}.title ;;
+    sql: ${TABLE}."Title" ;;
   }
 
-  # measures #
+  dimension: website_user__c {
+    type: yesno
+    sql: ${TABLE}."Website_user__c" ;;
+  }
 
   measure: count {
     type: count
-    drill_fields: [id, name]
+    drill_fields: [id, name, last_name, first_name]
   }
 }

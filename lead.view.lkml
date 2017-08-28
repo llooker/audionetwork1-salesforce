@@ -1,206 +1,376 @@
-view: _lead {
-  sql_table_name: looker_salesforce.sf_lead ;;
-  # dimensions #
+view: lead {
+  sql_table_name: salesforce."sf_Lead" ;;
 
   dimension: id {
     primary_key: yes
     type: string
-    sql: ${TABLE}.id ;;
+    sql: ${TABLE}."Id" ;;
   }
 
-  dimension: annual_revenue {
+  dimension_group: _sdc_batched {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."_sdc_batched_at" ;;
+  }
+
+  dimension_group: _sdc_received {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."_sdc_received_at" ;;
+  }
+
+  dimension: _sdc_sequence {
     type: number
-    sql: ${TABLE}.annualrevenue ;;
+    sql: ${TABLE}."_sdc_sequence" ;;
   }
 
-  dimension: city {
+  dimension: _sdc_table_version {
+    type: number
+    sql: ${TABLE}."_sdc_table_version" ;;
+  }
+
+  dimension: address__country {
     type: string
-    sql: ${TABLE}.city ;;
+    sql: ${TABLE}."Address__country" ;;
+  }
+
+  dimension: allow_lead_convert__c {
+    type: yesno
+    sql: ${TABLE}."Allow_Lead_Convert__c" ;;
+  }
+
+  dimension: attributes__type {
+    type: string
+    sql: ${TABLE}."attributes__type" ;;
+  }
+
+  dimension: city__c {
+    type: string
+    sql: ${TABLE}."City__c" ;;
   }
 
   dimension: company {
     type: string
-    sql: ${TABLE}.company ;;
-  }
-
-  dimension: country {
-    type: string
-    sql: ${TABLE}.country ;;
+    sql: ${TABLE}."Company" ;;
   }
 
   dimension: converted_account_id {
     type: string
-    hidden: yes
-    sql: ${TABLE}.convertedaccountid ;;
+    sql: ${TABLE}."ConvertedAccountId" ;;
   }
 
   dimension: converted_contact_id {
     type: string
-    hidden: yes
-    sql: ${TABLE}.convertedcontactid ;;
+    sql: ${TABLE}."ConvertedContactId" ;;
   }
 
   dimension_group: converted {
     type: time
-    timeframes: [date, week, month]
-    convert_tz: no
-    sql: ${TABLE}.converteddate ;;
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."ConvertedDate" ;;
   }
 
   dimension: converted_opportunity_id {
     type: string
-    hidden: yes
-    sql: ${TABLE}.convertedopportunityid ;;
+    sql: ${TABLE}."ConvertedOpportunityId" ;;
+  }
+
+  dimension: country {
+    type: string
+    map_layer_name: countries
+    sql: ${TABLE}."Country" ;;
+  }
+
+  dimension: country__c {
+    type: string
+    sql: ${TABLE}."Country__c" ;;
   }
 
   dimension: created_by_id {
     type: string
-    hidden: yes
-    sql: ${TABLE}.createdbyid ;;
+    sql: ${TABLE}."CreatedById" ;;
   }
 
   dimension_group: created {
     type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.createddate ;;
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."CreatedDate" ;;
+  }
+
+  dimension: currency_iso_code {
+    type: string
+    sql: ${TABLE}."CurrencyIsoCode" ;;
   }
 
   dimension: description {
     type: string
-    sql: ${TABLE}.description ;;
+    sql: ${TABLE}."Description" ;;
   }
 
   dimension: email {
     type: string
-    sql: ${TABLE}.email ;;
+    sql: ${TABLE}."Email" ;;
   }
 
-  #   - dimension: fax
-  #     type: string
-  #     sql: ${TABLE}.fax
+  dimension: et4ae5__has_opted_out_of_mobile__c {
+    type: yesno
+    sql: ${TABLE}."et4ae5__HasOptedOutOfMobile__c" ;;
+  }
+
+  dimension: et4ae5__mobile_country_code__c {
+    type: string
+    sql: ${TABLE}."et4ae5__Mobile_Country_Code__c" ;;
+  }
 
   dimension: first_name {
     type: string
-    sql: ${TABLE}.firstname ;;
+    sql: ${TABLE}."FirstName" ;;
   }
 
-  dimension: industry {
-    type: string
-    sql: ${TABLE}.industry ;;
+  dimension: freelancer__c {
+    type: yesno
+    sql: ${TABLE}."Freelancer__c" ;;
+  }
+
+  dimension: has_opted_out_of_email {
+    type: yesno
+    sql: ${TABLE}."HasOptedOutOfEmail" ;;
   }
 
   dimension: is_converted {
     type: yesno
-    sql: ${TABLE}.isconverted ;;
+    sql: ${TABLE}."IsConverted" ;;
   }
 
   dimension: is_deleted {
     type: yesno
-    sql: ${TABLE}.isdeleted ;;
+    sql: ${TABLE}."IsDeleted" ;;
   }
 
   dimension: is_unread_by_owner {
     type: yesno
-    sql: ${TABLE}.isunreadbyowner ;;
+    sql: ${TABLE}."IsUnreadByOwner" ;;
+  }
+
+  dimension_group: last_activity {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."LastActivityDate" ;;
   }
 
   dimension: last_modified_by_id {
     type: string
-    sql: ${TABLE}.lastmodifiedbyid ;;
+    sql: ${TABLE}."LastModifiedById" ;;
   }
 
   dimension_group: last_modified {
     type: time
-    timeframes: [date, week, month]
-    sql: ${TABLE}.lastmodifieddate ;;
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."LastModifiedDate" ;;
   }
 
   dimension: last_name {
     type: string
-    sql: ${TABLE}.lastname ;;
+    sql: ${TABLE}."LastName" ;;
+  }
+
+  dimension_group: last_referenced {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."LastReferencedDate" ;;
+  }
+
+  dimension_group: last_viewed {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."LastViewedDate" ;;
+  }
+
+  dimension: lead_number__c {
+    type: string
+    sql: ${TABLE}."Lead_Number__c" ;;
   }
 
   dimension: lead_source {
     type: string
-    sql: ${TABLE}.leadsource ;;
+    sql: ${TABLE}."LeadSource" ;;
+  }
+
+  dimension: lead_source__c {
+    type: string
+    sql: ${TABLE}."Lead_Source__c" ;;
+  }
+
+  dimension: lead_type__c {
+    type: string
+    sql: ${TABLE}."Lead_Type__c" ;;
   }
 
   dimension: name {
     type: string
-    sql: ${TABLE}.name ;;
-  }
-
-  dimension: number_of_employees {
-    type: number
-    sql: ${TABLE}.numberofemployees ;;
+    sql: ${TABLE}."Name" ;;
   }
 
   dimension: owner_id {
     type: string
-    hidden: yes
-    sql: ${TABLE}.ownerid ;;
+    sql: ${TABLE}."OwnerId" ;;
+  }
+
+  dimension: owner_region__c {
+    type: string
+    sql: ${TABLE}."Owner_Region__c" ;;
   }
 
   dimension: phone {
     type: string
-    sql: ${TABLE}.phone ;;
+    sql: ${TABLE}."Phone" ;;
   }
 
-  dimension: postal_code {
+  dimension: photo_url {
     type: string
-    sql: ${TABLE}.postalcode ;;
+    sql: ${TABLE}."PhotoUrl" ;;
+  }
+
+  dimension: postcode__c {
+    type: string
+    sql: ${TABLE}."Postcode__c" ;;
+  }
+
+  dimension: production_area__c {
+    type: string
+    sql: ${TABLE}."Production_Area__c" ;;
+  }
+
+  dimension: professional__c {
+    type: yesno
+    sql: ${TABLE}."Professional__c" ;;
+  }
+
+  dimension: region__c {
+    type: string
+    sql: ${TABLE}."Region__c" ;;
   }
 
   dimension: salutation {
     type: string
-    sql: ${TABLE}.salutation ;;
+    sql: ${TABLE}."Salutation" ;;
   }
 
-  dimension: state {
+  dimension: state_province__c {
     type: string
-    sql: ${TABLE}.state ;;
+    sql: ${TABLE}."State_Province__c" ;;
   }
 
   dimension: status {
     type: string
-    sql: ${TABLE}.status ;;
+    sql: ${TABLE}."Status" ;;
   }
 
-  dimension: street {
+  dimension: street__c {
     type: string
-    sql: ${TABLE}.street ;;
+    sql: ${TABLE}."Street__c" ;;
+  }
+
+  dimension: sub_source__c {
+    type: string
+    sql: ${TABLE}."Sub_Source__c" ;;
   }
 
   dimension_group: system_modstamp {
     type: time
-    timeframes: [date, week, month]
-    sql: ${TABLE}.systemmodstamp ;;
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."SystemModstamp" ;;
   }
 
   dimension: title {
     type: string
-    sql: ${TABLE}.title ;;
+    sql: ${TABLE}."Title" ;;
+  }
+
+  dimension: vat_number__c {
+    type: string
+    sql: ${TABLE}."VAT_Number__c" ;;
   }
 
   dimension: website {
     type: string
-    sql: ${TABLE}.website ;;
+    sql: ${TABLE}."Website" ;;
   }
 
-  # measures #
   measure: count {
     type: count
-    drill_fields: [id, last_name, name, first_name]
-  }
-
-  #     filters:
-  #       lead.is_deleted: 0
-
-  measure: avg_annual_revenue {
-    type: average
-    sql: ${TABLE}.annual_revenue ;;
+    drill_fields: [id, name, last_name, first_name]
   }
 }
-
-#     filters:
-#       lead.is_deleted: 0
