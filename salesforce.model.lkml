@@ -28,6 +28,7 @@ explore: account {
   }
 }
 
+explore: contact {}
 
 
 explore: opportunity {
