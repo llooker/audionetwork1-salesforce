@@ -28,7 +28,9 @@ explore: account {
   }
 }
 
+explore: contact {}
 
+explore: sales_and_revenue {}
 
 explore: opportunity {
   #   sql_always_where: |
